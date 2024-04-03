@@ -1,8 +1,15 @@
-// import { useState } from 'react'
+import { useState } from "react";
+import Form from "./Form.jsx";
 import "../styles/App.css";
+import Button from "./Button.jsx";
 
 export default function App() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
-    <h1 className="text-3xl font-bold underline bg-lime-800">Hello world!</h1>
+    <>
+      {showForm ? <Form /> : null}
+      <Button onClick={() => setShowForm(!showForm)}>Open!</Button>
+    </>
   );
 }
