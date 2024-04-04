@@ -1,5 +1,51 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Button from "./Button";
+
+function FieldSection({ title, fields, initialValue, buttonText }) {
+  const [items, setItems] = useState(initialValue);
+
+  const addField = (e) => {
+    e.preventDefault();
+    setItems([...items, {}]);
+  };
+
+  const handleInput = (index, fieldName, value) => {
+    const newItems = [...items];
+    newItems[index][fieldName] = value;
+    setItems(newItems);
+  };
+
+  return (
+    <fieldset className="border border-slate-700 rounded-md p-4 m-4">
+      <legend className="text-xl">{title}</legend>
+      <ul>
+        {items &&
+          items.map((item, index) => (
+            <li className="grid grid-cols-2 gap-2" key={index}>
+              {fields &&
+                fields.map((field, fieldIndex) => (
+                  <label key={fieldIndex}>
+                    <p>{field.label}</p>
+                    <input
+                      className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
+                      type={field.type}
+                      value={item[field.name] || ""}
+                      onChange={(e) =>
+                        handleInput(index, field.name, e.target.value)
+                      }
+                    />
+                  </label>
+                ))}
+            </li>
+          ))}
+      </ul>
+      <Button classes={"mt-4"} onClick={addField}>
+        {buttonText}
+      </Button>
+    </fieldset>
+  );
+}
 
 function PersonalInformationSection() {
   return (
@@ -42,124 +88,39 @@ function PersonalInformationSection() {
 }
 
 function EducationSection() {
-  const [education, setEducation] = useState([]);
-
-  const addField = (e) => {
-    e.preventDefault();
-    const newField = (
-      <li className="grid grid-cols-2 gap-2" key={education.length}>
-        <EducationBlock />
-      </li>
-    );
-    setEducation([...education, newField]);
-  };
+  const fields = [
+    { name: "degree", label: "Degree", type: "text" },
+    { name: "school", label: "School", type: "text" },
+    { name: "startDate", label: "Start Date", type: "date" },
+    { name: "endDate", label: "End Date", type: "date" },
+  ];
 
   return (
-    <fieldset className="border border-slate-700 rounded-md p-4 m-4">
-      <legend className="text-xl">Education History</legend>
-      <ul>{education.map((item) => item)}</ul>
-      <Button classes={"mt-4"} onClick={addField}>
-        Add Education
-      </Button>
-    </fieldset>
-  );
-}
-
-function EducationBlock() {
-  return (
-    <>
-      <label>
-        <p>Degree</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>School</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>Start Date</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="date"
-        />
-      </label>
-      <label>
-        <p>End Date</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="date"
-        />
-      </label>
-    </>
+    <FieldSection
+      title="Education History"
+      fields={fields}
+      initialValue={[{}]}
+      buttonText="Add Education"
+    />
   );
 }
 
 function WorkSection() {
-  const [work, setWork] = useState([]);
-
-  const addField = (e) => {
-    e.preventDefault();
-    const newField = (
-      <li className="grid grid-cols-2 gap-2" key={work.length}>
-        <WorkBlock />
-      </li>
-    );
-    setWork([...work, newField]);
-  };
+  const fields = [
+    { name: "role", label: "Role", type: "text" },
+    { name: "employer", label: "Employer", type: "text" },
+    { name: "startDate", label: "Start Date", type: "date" },
+    { name: "endDate", label: "End Date", type: "date" },
+    { name: "responsibilities", label: "Responsibilities", type: "textarea" },
+  ];
 
   return (
-    <fieldset className="border border-slate-700 rounded-md p-4 m-4">
-      <legend className="text-xl">Work History</legend>
-      <ul>{work.map((item) => item)}</ul>
-      <Button classes={"mt-4"} onClick={addField}>
-        Add Work
-      </Button>
-    </fieldset>
-  );
-}
-
-function WorkBlock() {
-  return (
-    <>
-      <label>
-        <p>Role</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>Employer</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>Start Date</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="date"
-        />
-      </label>
-      <label>
-        <p>End Date</p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="date"
-        />
-      </label>
-      <label className="col-span-2">
-        <p>Responsibilties: </p>
-        <textarea className="bg-slate-100 rounded-md border-slate-300 w-full text-slate-700" />
-      </label>
-    </>
+    <FieldSection
+      title="Work History"
+      fields={fields}
+      initialValue={[{}]}
+      buttonText="Add Work"
+    />
   );
 }
 
