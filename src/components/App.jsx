@@ -9,7 +9,7 @@ export default function App() {
   return (
     <>
       {showForm ? <Form /> : null}
-      <Button onClick={() => setShowForm(!showForm)}>Open!</Button>
+      <Button handleClick={() => setShowForm(!showForm)}>Open!</Button>
     </>
   );
 }

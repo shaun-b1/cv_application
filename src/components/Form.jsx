@@ -5,15 +5,17 @@ import Button from "./Button";
 function FieldSection({ title, fields, initialValue, buttonText }) {
   const [items, setItems] = useState(initialValue);
 
-  const addField = (e) => {
+  const handleAddField = (e) => {
     e.preventDefault();
     setItems([...items, {}]);
   };
 
   const handleInput = (index, fieldName, value) => {
-    const newItems = [...items];
-    newItems[index][fieldName] = value;
-    setItems(newItems);
+    setItems((prevItems) => {
+      const newItems = [...prevItems];
+      newItems[index][fieldName] = value;
+      return newItems;
+    });
   };
 
   return (
@@ -23,10 +25,21 @@ function FieldSection({ title, fields, initialValue, buttonText }) {
         {items &&
           items.map((item, index) => (
             <li className="grid grid-cols-2 gap-2" key={index}>
-              {fields &&
-                fields.map((field, fieldIndex) => (
-                  <label key={fieldIndex}>
-                    <p>{field.label}</p>
+              {fields.map((field, fieldIndex) => (
+                <label
+                  key={fieldIndex}
+                  className={field.type === "textarea" ? "col-span-2" : ""}
+                >
+                  <p>{field.label}</p>
+                  {field.type === "textarea" ? (
+                    <textarea
+                      className="bg-slate-100 rounded-md border-slate-300 w-full text-slate-700"
+                      value={item[field.name] || ""}
+                      onChange={(e) =>
+                        handleInput(index, field.name, e.target.value)
+                      }
+                    />
+                  ) : (
                     <input
                       className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
                       type={field.type}
@@ -35,55 +48,39 @@ function FieldSection({ title, fields, initialValue, buttonText }) {
                         handleInput(index, field.name, e.target.value)
                       }
                     />
-                  </label>
-                ))}
+                  )}
+                </label>
+              ))}
             </li>
           ))}
       </ul>
-      <Button classes={"mt-4"} onClick={addField}>
-        {buttonText}
-      </Button>
+      {buttonText && (
+        <Button classes={"mt-4"} handleClick={handleAddField}>
+          {buttonText}
+        </Button>
+      )}
     </fieldset>
   );
 }
 
 function PersonalInformationSection() {
+  const fields = [
+    { name: "firstName", label: "First Name", type: "text" },
+    { name: "lastName", label: "Last Name", type: "text" },
+    { name: "phone", label: "Phone", type: "tel" },
+    { name: "email", label: "Email", type: "email" },
+    {
+      name: "personalStatement",
+      label: "Personal Statement",
+      type: "textarea",
+    },
+  ];
   return (
-    <fieldset className="grid grid-columns-2 gap-2 border border-slate-700 rounded-md p-4 m-4">
-      <legend className="text-xl">Personal Information</legend>
-      <label>
-        <p>First Name: </p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>Last Name: </p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="text"
-        />
-      </label>
-      <label>
-        <p>Phone: </p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="tel"
-        />
-      </label>
-      <label>
-        <p>Email: </p>
-        <input
-          className="bg-slate-100 rounded-md border-slate-300 text-slate-700"
-          type="email"
-        />
-      </label>
-      <label className="col-span-2">
-        <p>Personal Statement: </p>
-        <textarea className="bg-slate-100 rounded-md border-slate-300 w-full text-slate-700" />
-      </label>
-    </fieldset>
+    <FieldSection
+      title="Personal Information"
+      fields={fields}
+      initialValue={[{}]}
+    />
   );
 }
 
