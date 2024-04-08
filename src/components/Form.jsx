@@ -123,7 +123,7 @@ function WorkSection() {
 
 export default function Form() {
   return (
-    <form className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-slate-100">
+    <form>
       <PersonalInformationSection />
       <EducationSection />
       <WorkSection />
