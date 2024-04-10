@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Form from "./Form.jsx";
 import "../styles/App.css";
 import Button from "./Button.jsx";
+import { Display } from "./Display.jsx";
 
 export default function App() {
   const [data, setData] = useState({
@@ -40,14 +41,12 @@ export default function App() {
         ref={dialogRef}
         className="text-slate-100 bg-slate-500 rounded-md"
       >
-        <Form
-          fields={data}
-          handlePersonalDataChange={handlePersonalDataChange}
-        />
+        <Form data={data} handlePersonalDataChange={handlePersonalDataChange} />
         <Button classes={"m-4"} handleClick={closeModal}>
           Close
         </Button>
       </dialog>
+      <Display data={data} />
       <Button handleClick={openModal}>Open!</Button>
     </>
   );

@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { InputField, TextareaField } from "./Fields";
 
-export default function PersonalFieldset({ fields, handlePersonalDataChange }) {
-  const { firstName, lastName, phone, email, personalStatement } = fields;
+export function PersonalFieldset({ data, handlePersonalDataChange }) {
+  const { firstName, lastName, phone, email, personalStatement } = data;
   return (
-    <fieldset className=" grid grid-cols-2 gap-2 border border-slate-700 rounded-md p-4 m-4">
+    <fieldset className="grid grid-cols-2 gap-2 border border-slate-700 rounded-md p-4 m-4">
       <legend className="text-xl">Personal Information</legend>
       <InputField
         name={"firstName"}

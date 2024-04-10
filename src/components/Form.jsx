@@ -2,11 +2,11 @@
 // import { PersonalInformationSection } from "./Fieldsets";
 import { PersonalFieldset } from "./PersonalFieldset";
 
-export default function Form({ fields, handlePersonalDataChange }) {
+export default function Form({ data, handlePersonalDataChange }) {
   return (
     <form>
       <PersonalFieldset
-        fields={fields.personalInformation}
+        data={data.personalInformation}
         handlePersonalDataChange={handlePersonalDataChange}
       />
       {/* <EducationSection />
