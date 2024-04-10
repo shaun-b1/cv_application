@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import { PersonalInformationSection } from "./Fieldsets";
+// import { PersonalInformationSection } from "./Fieldsets";
+import { PersonalFieldset } from "./PersonalFieldset";
 
-export default function Form({ fields, handleChange }) {
+export default function Form({ fields, handlePersonalDataChange }) {
   return (
     <form>
-      <PersonalInformationSection
+      <PersonalFieldset
         fields={fields.personalInformation}
-        handleChange={handleChange}
+        handlePersonalDataChange={handlePersonalDataChange}
       />
       {/* <EducationSection />
       <WorkSection /> */}

@@ -4,7 +4,7 @@ import "../styles/App.css";
 import Button from "./Button.jsx";
 
 export default function App() {
-  const [fields, setFields] = useState({
+  const [data, setData] = useState({
     personalInformation: {
       firstName: "Shaun",
       lastName: "MacWilliam",
@@ -14,10 +14,13 @@ export default function App() {
     },
   });
 
-  function handleChange(e) {
-    setFields({
-      ...fields,
-      [e.target.name]: e.target.value,
+  function handlePersonalDataChange(e) {
+    setData({
+      ...data,
+      personalInformation: {
+        ...data.personalInformation,
+        [e.target.name]: e.target.value,
+      },
     });
   }
 
@@ -37,7 +40,10 @@ export default function App() {
         ref={dialogRef}
         className="text-slate-100 bg-slate-500 rounded-md"
       >
-        <Form fields={fields} handleChange={handleChange} />
+        <Form
+          fields={data}
+          handlePersonalDataChange={handlePersonalDataChange}
+        />
         <Button classes={"m-4"} handleClick={closeModal}>
           Close
         </Button>
