@@ -13,6 +13,14 @@ export default function App() {
       email: "shaun@email.com",
       personalStatement: "Lorem ipsum dolor ...",
     },
+    educationInformation: [
+      {
+        degree: "Bachelor of bachelors",
+        school: "School of Rock",
+        startDate: "2010-01",
+        endDate: "2013-01",
+      },
+    ],
   });
 
   function handlePersonalDataChange(e) {
@@ -22,6 +30,21 @@ export default function App() {
         ...data.personalInformation,
         [e.target.name]: e.target.value,
       },
+    });
+  }
+
+  function handleEducationDataChange(id, e) {
+    setData({
+      ...data,
+      educationInformation: data.educationInformation.map(
+        (education, index) => {
+          if (index === id) {
+            return { ...education, [e.target.name]: e.target.value };
+          } else {
+            return education;
+          }
+        },
+      ),
     });
   }
 
@@ -41,7 +64,11 @@ export default function App() {
         ref={dialogRef}
         className="text-slate-100 bg-slate-500 rounded-md"
       >
-        <Form data={data} handlePersonalDataChange={handlePersonalDataChange} />
+        <Form
+          data={data}
+          handlePersonalDataChange={handlePersonalDataChange}
+          handleEducationDataChange={handleEducationDataChange}
+        />
         <Button classes={"m-4"} handleClick={closeModal}>
           Close
         </Button>
