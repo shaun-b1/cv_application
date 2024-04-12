@@ -4,7 +4,7 @@ import { InputField } from "./Fields";
 export function EducationFieldset({ data, handleEducationDataChange }) {
   return (
     <fieldset className="border border-slate-700 rounded-md p-4 m-4">
-      <legend className="text-xl">Education Information</legend>
+      <legend className="text-xl">Education History</legend>
       <ul>
         {data.map((education, index) => (
           <li className="grid grid-cols-2 gap-2" key={index}>

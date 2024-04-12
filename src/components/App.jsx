@@ -21,6 +21,15 @@ export default function App() {
         endDate: "2013-01",
       },
     ],
+    workInformation: [
+      {
+        role: "janitor",
+        employer: "acme corp",
+        startDate: "2018-01",
+        endDate: "2020-01",
+        responsibilites: "I cleaned up the messes",
+      },
+    ],
   });
 
   function handlePersonalDataChange(e) {
@@ -48,6 +57,19 @@ export default function App() {
     });
   }
 
+  function handleWorkDataChange(id, e) {
+    setData({
+      ...data,
+      workInformation: data.workInformation.map((work, index) => {
+        if (index === id) {
+          return { ...work, [e.target.name]: e.target.value };
+        } else {
+          return work;
+        }
+      }),
+    });
+  }
+
   const dialogRef = useRef(null);
 
   const openModal = () => {
@@ -68,6 +90,7 @@ export default function App() {
           data={data}
           handlePersonalDataChange={handlePersonalDataChange}
           handleEducationDataChange={handleEducationDataChange}
+          handleWorkDataChange={handleWorkDataChange}
         />
         <Button classes={"m-4"} handleClick={closeModal}>
           Close
@@ -78,41 +101,3 @@ export default function App() {
     </>
   );
 }
-
-// let person = {
-//   firstName: 'Shaun',
-//   lastName: 'MacWilliam',
-//   phone: "012-3456-7890",
-//   email: 'shaun@email.com',
-//   personalStatement: "Lorem ipsum dolor ...",
-//   education: [
-//     {
-//       degree: "Bachelor of bachelors",
-//       school: "School of Rock",
-//       startDate: "2010-01-01",
-//       endDate: "2013-01-01"
-//     },
-//     {
-//       degree: "Master of masters",
-//       school: "Juliard",
-//       startDate: "2014-01-01",
-//       endDate: "2017-01-01"
-//     },
-//   ],
-//   jobs: [
-//     {
-//       role: "janitor",
-//       employer: "acme corp",
-//       startDate: "2018-01-01",
-//       endDate: "2020-01-01",
-//       responsibilites: "I cleaned up the messes"
-//     },
-//     {
-//       role: "senior janitor",
-//       employer: "mom corp",
-//       startDate: "2021-01-01",
-//       endDate: "2023-01-01",
-//       responsibilites: "I cleaned up the messes"
-//     }
-//   ]
-// }

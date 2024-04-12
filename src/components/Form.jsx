@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-// import { PersonalInformationSection } from "./Fieldsets";
 import { PersonalFieldset } from "./PersonalFieldset";
 import { EducationFieldset } from "./EducationFieldset";
+import { WorkFieldset } from "./WorkFieldset";
 
 export default function Form({
   data,
   handlePersonalDataChange,
   handleEducationDataChange,
+  handleWorkDataChange,
 }) {
   return (
     <form>
@@ -18,7 +19,10 @@ export default function Form({
         data={data.educationInformation}
         handleEducationDataChange={handleEducationDataChange}
       />
-      {/* <WorkSection /> */}
+      <WorkFieldset
+        data={data.workInformation}
+        handleWorkDataChange={handleWorkDataChange}
+      />
     </form>
   );
 }
