@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Form from "./Form.jsx";
 import "../styles/App.css";
 import Button from "./Button.jsx";
@@ -15,6 +16,7 @@ export default function App() {
     },
     educationInformation: [
       {
+        id: uuidv4(),
         degree: "Bachelor of bachelors",
         school: "School of Rock",
         startDate: "2010-01",
@@ -23,6 +25,7 @@ export default function App() {
     ],
     workInformation: [
       {
+        id: uuidv4(),
         role: "janitor",
         employer: "acme corp",
         startDate: "2018-01",
@@ -45,14 +48,37 @@ export default function App() {
   function handleEducationDataChange(id, e) {
     setData({
       ...data,
-      educationInformation: data.educationInformation.map(
-        (education, index) => {
-          if (index === id) {
-            return { ...education, [e.target.name]: e.target.value };
-          } else {
-            return education;
-          }
+      educationInformation: data.educationInformation.map((education) => {
+        if (education.id === id) {
+          return { ...education, [e.target.name]: e.target.value };
+        } else {
+          return education;
+        }
+      }),
+    });
+  }
+
+  function handleAddEducation() {
+    setData({
+      ...data,
+      educationInformation: [
+        ...data.educationInformation,
+        {
+          id: uuidv4(),
+          degree: "",
+          school: "",
+          startDate: "",
+          endDate: "",
         },
+      ],
+    });
+  }
+
+  function handleDeleteEducation(id) {
+    setData({
+      ...data,
+      educationInformation: data.educationInformation.filter(
+        (education) => education.id !== id,
       ),
     });
   }
@@ -67,6 +93,30 @@ export default function App() {
           return work;
         }
       }),
+    });
+  }
+
+  function handleAddWork() {
+    setData({
+      ...data,
+      workInformation: [
+        ...data.workInformation,
+        {
+          id: uuidv4(),
+          role: "",
+          employer: "",
+          startDate: "",
+          endDate: "",
+          responsibilites: "",
+        },
+      ],
+    });
+  }
+
+  function handleDeleteWork(id) {
+    setData({
+      ...data,
+      workInformation: data.workInformation.filter((work) => work.id !== id),
     });
   }
 
@@ -90,7 +140,11 @@ export default function App() {
           data={data}
           handlePersonalDataChange={handlePersonalDataChange}
           handleEducationDataChange={handleEducationDataChange}
+          handleAddEducation={handleAddEducation}
+          handleDeleteEducation={handleDeleteEducation}
           handleWorkDataChange={handleWorkDataChange}
+          handleAddWork={handleAddWork}
+          handleDeleteWork={handleDeleteWork}
         />
         <Button classes={"m-4"} handleClick={closeModal}>
           Close

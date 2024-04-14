@@ -7,7 +7,11 @@ export default function Form({
   data,
   handlePersonalDataChange,
   handleEducationDataChange,
+  handleAddEducation,
+  handleDeleteEducation,
   handleWorkDataChange,
+  handleAddWork,
+  handleDeleteWork,
 }) {
   return (
     <form>
@@ -18,10 +22,14 @@ export default function Form({
       <EducationFieldset
         data={data.educationInformation}
         handleEducationDataChange={handleEducationDataChange}
+        handleAddEducation={handleAddEducation}
+        handleDeleteEducation={handleDeleteEducation}
       />
       <WorkFieldset
         data={data.workInformation}
         handleWorkDataChange={handleWorkDataChange}
+        handleAddWork={handleAddWork}
+        handleDeleteWork={handleDeleteWork}
       />
     </form>
   );
